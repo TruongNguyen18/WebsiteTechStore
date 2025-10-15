@@ -1,5 +1,117 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model WebsiteTechStore.Models.ProductModel
 @{
+    ViewData["Title"] = Model?.Name ?? "Product Details";
 }
+
+@if (Model == null)
+{
+    <div class="container mt-4">
+        <div class="alert alert-warning">Sản phẩm không tồn tại hoặc đã bị xóa.</div>
+    </div>
+    return;
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <!-- Product main img -->
+            <div class="col-md-5 col-md-push-2">
+                <div id="product-main-img">
+                    <div class="product-preview">
+                        <img src="~/img/@(Model.Image ?? "no-image.png")" alt="@Model.Name" />
+                    </div>
+                </div>
+            </div>
+            <!-- /Product main img -->
+            <!-- Product thumb imgs -->
+            <div class="col-md-2 col-md-pull-5">
+                <div id="product-imgs">
+                    <div class="product-preview">
+                        <img src="~/img/@(Model.Image ?? "no-image.png")" alt="@Model.Name" />
+                    </div>
+                </div>
+            </div>
+            <!-- /Product thumb imgs -->
+            <!-- Product details -->
+            <div class="col-md-5">
+                <div class="product-details">
+                    <h2 class="product-name">@Model.Name</h2>
+
+                    <div>
+                        <div class="product-rating">
+                            <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="product-price">@((Model.Price).ToString("#,##0 VNĐ"))</h3>
+                        <span class="product-available">
+                            @(Model.Status == 1 ? "In Stock" : "Out of Stock")
+                        </span>
+                    </div>
+
+                    <p>@(Model.Description ?? "Đang cập nhật")</p>
+
+                    <div class="add-to-cart">
+                        <button class="add-to-cart-btn">
+                            <i class="fa fa-shopping-cart"></i> add to cart
+                        </button>
+                    </div>
+
+                    <ul class="product-links">
+                        <li>Category:</li>
+                        @if (Model.Category != null)
+                        {
+                            <li><a asp-controller="Category" asp-action="Index" asp-route-id="@Model.Category.Id">@Model.Category.Name</a></li>
+                        }
+
+                        @if (Model.Brand != null)
+                        {
+                            <li><a asp-controller="Brand" asp-action="Index" asp-route-id="@Model.Brand.Id">@Model.Brand.Name</a></li>
+                        }
+                    </ul>
+
+                    <ul class="product-links">
+                        <li>Share:</li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /Product details -->
+            <!-- Tabs -->
+            <div class="col-md-12">
+                <div id="product-tab">
+                    <ul class="tab-nav">
+                        <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
+                        <li><a data-toggle="tab" href="#tab2">Details</a></li>
+                        <li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="tab1" class="tab-pane fade in active">
+                            <div class="row"><div class="col-md-12"><p>@(Model.Description ?? "Đang cập nhật")</p></div></div>
+                        </div>
+
+                        <div id="tab2" class="tab-pane fade in">
+                            <div class="row"><div class="col-md-12"><p>Thông tin chi tiết đang cập nhật…</p></div></div>
+                        </div>
+
+                        <div id="tab3" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-3"><div id="rating">…</div></div>
+                                <div class="col-md-6"><div id="reviews">…</div></div>
+                                <div class="col-md-3"><div id="review-form">…</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Tabs -->
+        </div>
+    </div>
+</div>

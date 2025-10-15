@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Electro - HTML Ecommerce Template</title>
+	<title>Website Bán Hàng Điện Tử</title>
 
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
@@ -48,8 +48,8 @@
 					<!-- LOGO -->
 					<div class="col-md-3">
 						<div class="header-logo">
-							<a href="#" class="logo">
-								<img src="./img/logo.png" alt="">
+							<a href="@Url.Action("Index","Home")"  class="logo" >
+								<img src="~/img/logo.png" alt="">
 							</a>
 						</div>
 					</div>
@@ -64,7 +64,7 @@
 									<option value="1">Category 02</option>
 								</select>
 								<input class="input" placeholder="Search here">
-								<button class="search-btn">Tìm</button>
+								<button class="search-btn">Search</button>
 							</form>
 						</div>
 					</div>
@@ -74,7 +74,7 @@
 						<div class="header-ctn">
 							<!-- Cart -->
 							<div class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+								<a asp-controller="Cart" asp-action="Index" class="btn btn-outline-light">
 									<i class="fa fa-shopping-cart"></i>
 									<span>Your Cart</span>
 									<div class="qty">3</div>
@@ -144,11 +144,8 @@
 			<div id="responsive-nav">
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav">
-					<li class="active"><a asp-controller="Home">Home</a></li>
-					<li><a asp-action="Index" asp-controller="Category">Category</a></li>
-					<li><a asp-action="Details" asp-controller="Product">Product Detials</a></li>
-					<li><a asp-action="Index" asp-controller="Catagory">Smartphone</a></li>
-					<li><a asp-action="Index" asp-controller="Catagory">Camera</a></li>
+					<li class="active"><a asp-action="Index" asp-controller="Home">Home</a></li>
+					<li><a asp-action="Index" asp-controller="Cart">Cart</a></li>
 				</ul>
 				<!-- /NAV -->
 			</div>
@@ -171,7 +168,7 @@
 					<div class="col-md-3 col-xs-6">
 						<div class="footer">
 							<h3 class="footer-title">About Us</h3>
-							<p>Nhóm 11</p>
+							<p>Nhóm 9</p>
 							<ul class="footer-links">
 								<li><a href="#"><i class="fa fa-map-marker"></i>Đại học Kiến Trúc Hà Nội</a></li>
 								<li><a href="#"><i class="fa fa-phone"></i>0822186204</a></li>
@@ -216,18 +213,10 @@
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-					<div class="col-md-12 text-center">
-						<ul class="footer-payments">
-							<li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-							<li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-							<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
-						</ul>
+					<div class="col-md-12 text-center>
 						<span class="copyright">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</a>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</span>
 					</div>

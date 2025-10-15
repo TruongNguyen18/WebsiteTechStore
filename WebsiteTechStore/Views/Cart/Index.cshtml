@@ -1,5 +1,152 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model WebsiteTechStore.Models.ViewModels.CartItemViewModel
+@using WebsiteTechStore.Models
 @{
+    ViewData["Title"] = "Giỏ hàng";
+    var items = Model?.CartItems ?? new List<CartItemModel>();
+    decimal subtotal = items.Sum(x => x.Total);
+}
+
+<!-- SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="order-summary clearfix">
+                    <div class="section-title">
+                        <h3 class="title">Giỏ hàng của bạn</h3>
+                    </div>
+
+                    @if (items.Count == 0)
+                    {
+                        <div class="alert alert-info text-center">
+                            <i class="fa fa-info-circle"></i> Giỏ hàng trống.
+                            <a asp-controller="Home" asp-action="Index">Tiếp tục mua sắm</a>
+                        </div>
+                    }
+                    else if(items.Count > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="shopping-cart-table table">
+                                <thead>
+                                    <tr>
+                                        <th>Ảnh</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th class="text-center">Đơn giá</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th class="text-center">Thành tiền</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in items)
+                                    {
+                                        <tr>
+                                            <td class="thumb">
+                                                <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
+                                                    <img src="~/img/@item.Image" alt="@item.ProductName" style="width:80px; height:auto;" />
+                                                </a>
+                                            </td>
+                                            <td class="details">
+                                                <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
+                                                    @item.ProductName
+                                                </a>
+                                            </td>
+                                            <td class="price text-center">
+                                                @item.Price.ToString("#,##0 VNĐ")
+                                            </td>
+                                            <td class="qty text-center">
+                                                <div class="input-number">
+                                                    <a class="btn btn-success btn-sm" asp-controller="Cart" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
+                                                    <input class="cart_quantity_input" type="text" name="quantity" value="@item.Quantity" autocomplete="off" size="2">
+                                                    <a class="btn btn-primary btn-sm" asp-controller="Cart" asp-action="Increase" asp-route-id="@item.ProductId">+</a>
+                                                    <a class="btn btn-danger btn-sm" asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId">Remove</a>
+                                                </div>
+                                            </td>
+                                            <td class="total text-center">
+                                                @item.Total.ToString("#,##0 VNĐ")
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-danger btn-sm remove-item" data-id="@item.ProductId">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4" class="text-right">Tạm tính:</th>
+                                        <th colspan="2" id="subtotal">@subtotal.ToString("#,##0 VNĐ")</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4" class="text-right">Tổng cộng:</th>
+                                        <th colspan="2" id="grandtotal">@subtotal.ToString("#,##0 VNĐ")</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="pull-left">
+                            <a asp-controller="Home" asp-action="Index" class="primary-btn cta-btn">
+                                <i class="fa fa-arrow-left"></i> Tiếp tục mua sắm
+                            </a>
+                        </div>
+                        <div class="pull-right">
+                            <a asp-controller="Checkout" asp-action="Checkout" class="primary-btn cta-btn">
+                                Thanh toán <i class="fa fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /SECTION -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            // Cộng / trừ số lượng
+            $(".qty-up").click(function () {
+                var input = $(this).siblings("input");
+                input.val(parseInt(input.val()) + 1).trigger("change");
+            });
+            $(".qty-down").click(function () {
+                var input = $(this).siblings("input");
+                var val = parseInt(input.val());
+                if (val > 1) input.val(val - 1).trigger("change");
+            });
+
+            // Khi thay đổi số lượng
+            $(".qty-input").change(function () {
+                var id = $(this).data("id");
+                var qty = parseInt($(this).val());
+                if (qty < 1) qty = 1;
+                updateCart(id, qty);
+            });
+
+            // Xóa sản phẩm
+            $(".remove-item").click(function () {
+                var id = $(this).data("id");
+                if (confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
+                    updateCart(id, 0);
+                }
+            });
+
+            function updateCart(id, qty) {
+                $.ajax({
+                    url: '/Cart/Update',
+                    type: 'POST',
+                    data: { id: id, quantity: qty },
+                    success: function (res) {
+                        if (res.success) {
+                            location.reload(); // làm mới trang
+                        }
+                    }
+                });
+            }
+
+        });
+    </script>
 }

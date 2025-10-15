@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteTechStore", "WebsiteTechStore\WebsiteTechStore.csproj", "{A2E69229-6D35-4872-9FA0-E313A858A321}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Area", "Area", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{22118BF5-26A4-48F2-820F-2837135ACAD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Controllers", "Controllers", "{8D9DAEA1-2ED1-406D-9EE4-6547DC019F8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{47AA0716-EC58-4895-BD0B-E5C91346D869}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +26,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{22118BF5-26A4-48F2-820F-2837135ACAD5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{8D9DAEA1-2ED1-406D-9EE4-6547DC019F8C} = {22118BF5-26A4-48F2-820F-2837135ACAD5}
+		{47AA0716-EC58-4895-BD0B-E5C91346D869} = {22118BF5-26A4-48F2-820F-2837135ACAD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A3162955-B7E7-4B6A-A326-05DED5A95E43}
