@@ -1,19 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebsiteTechStore.Repository;
 
 namespace WebsiteTechStore.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly DataContext _dataContext;
+        public ProductController(DataContext context)
+        {
+            _dataContext = context;
+        }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int Id)
         {
-            // Logic to get product details by id can be added here
-            ViewBag.ProductId = id;
-            return View();
+            if (Id == null) return RedirectToAction("Index");
+            var productsById = _dataContext.Products.Where(p => p.Id == Id).FirstOrDefault();
+            return View(productsById);
         }
     }
 }

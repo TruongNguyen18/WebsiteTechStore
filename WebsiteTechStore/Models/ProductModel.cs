@@ -7,7 +7,7 @@ namespace WebsiteTechStore.Models
         [Key]
         public int Id { get; set; }
         [Required, MinLength(4, ErrorMessage = "Yêu cầu nhập tên sản phẩm")]
-        public string Name { get; set; }  
+        public string Name { get; set; }
         [Required, MinLength(4, ErrorMessage = "Yêu cầu nhập mô tả sản phẩm")]
         public string Description { get; set; }
 
@@ -20,5 +20,6 @@ namespace WebsiteTechStore.Models
         public int BrandId { get; set; }
         public CategoryModel Category { get; set; }
         public BrandModel Brand { get; set; }
+        public string Image { get; set; }
     }
 }

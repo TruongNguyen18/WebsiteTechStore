@@ -48,8 +48,8 @@
 					<!-- LOGO -->
 					<div class="col-md-3">
 						<div class="header-logo">
-							<a href="#" class="logo">
-								<img src="./img/logo.png" alt="">
+							<a href="@Url.Action("Index","Home")"  class="logo" >
+								<img src="~/img/logo.png" alt="">
 							</a>
 						</div>
 					</div>
@@ -144,7 +144,7 @@
 			<div id="responsive-nav">
 				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav">
-					<li class="active"><a asp-controller="Home">Home</a></li>
+					<li class="active"><a asp-action="Index" asp-controller="Home">Home</a></li>
 					<li><a asp-action="Index" asp-controller="Category">Category</a></li>
 					<li><a asp-action="Details" asp-controller="Product">Product Detials</a></li>
 					<li><a asp-action="Index" asp-controller="Catagory">Smartphone</a></li>
