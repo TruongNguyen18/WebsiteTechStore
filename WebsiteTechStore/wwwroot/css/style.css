@@ -2189,3 +2189,84 @@ textarea.input {
   }
 }
 
+.header-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+    .header-search .input {
+        width: 70%;
+        max-width: 450px;
+        border: 2px solid #D10024; /* màu viền đỏ chủ đạo */
+        border-radius: 25px; /* bo tròn viền */
+        padding: 8px 15px;
+        outline: none;
+        font-size: 15px;
+        transition: all 0.2s ease;
+    }
+
+        .header-search .input:focus {
+            border-color: #a8001c; /* viền đậm hơn khi focus */
+            box-shadow: 0 0 5px rgba(209, 0, 36, 0.4);
+        }
+
+    .header-search .search-btn {
+        background-color: #D10024;
+        color: white;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 25px; /* bo tròn nút tìm kiếm */
+        font-weight: 600;
+        transition: background 0.2s ease;
+    }
+
+        .header-search .search-btn:hover {
+            background-color: #a8001c; /* màu hover */
+        }
+
+<style >
+/* Thanh tìm kiếm admin – dính sát phải, bo tròn */
+.admin-search {
+    display: inline-flex;
+    gap: 8px;
+}
+
+.admin-input {
+    width: 280px;
+    max-width: 100%;
+    border: 2px solid #D10024;
+    border-right: 0;
+    border-radius: 25px 0 0 25px;
+    height: 36px;
+    padding: 6px 14px;
+    outline: none;
+    transition: all .2s ease;
+}
+
+    .admin-input:focus {
+        border-color: #a8001c;
+        box-shadow: 0 0 5px rgba(209,0,36,.35);
+    }
+
+.admin-btn {
+    border-radius: 0 25px 25px 0;
+    height: 36px;
+    padding: 6px 16px;
+    font-weight: 600;
+}
+
+/* Mobile: full width & không tràn dòng */
+@media (max-width: 767px) {
+    .admin-search {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .admin-input {
+        width: 100%;
+    }
+}
+
+</style >

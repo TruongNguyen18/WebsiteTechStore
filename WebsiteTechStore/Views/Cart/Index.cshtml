@@ -59,30 +59,41 @@
                                                     <a class="btn btn-success btn-sm" asp-controller="Cart" asp-action="Decrease" asp-route-id="@item.ProductId">-</a>
                                                     <input class="cart_quantity_input" type="text" name="quantity" value="@item.Quantity" autocomplete="off" size="2">
                                                     <a class="btn btn-primary btn-sm" asp-controller="Cart" asp-action="Increase" asp-route-id="@item.ProductId">+</a>
-                                                    <a class="btn btn-danger btn-sm" asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId">Remove</a>
                                                 </div>
                                             </td>
                                             <td class="total text-center">
                                                 @item.Total.ToString("#,##0 VNĐ")
                                             </td>
                                             <td class="text-center">
-                                                <button class="btn btn-danger btn-sm remove-item" data-id="@item.ProductId">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
+                                                <a class="btn btn-danger btn-sm" asp-controller="Cart" asp-action="Remove" asp-route-id="@item.ProductId">Remove</a>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="4" class="text-right">Tạm tính:</th>
-                                        <th colspan="2" id="subtotal">@subtotal.ToString("#,##0 VNĐ")</th>
+                                        <th colspan="3"></th>
+                                        <th class="text-right">Tạm tính:</th>
+                                        <th class="text-center" id="subtotal">@subtotal.ToString("#,##0 VNĐ")</th>
+                                        <th></th>
                                     </tr>
                                     <tr>
-                                        <th colspan="4" class="text-right">Tổng cộng:</th>
-                                        <th colspan="2" id="grandtotal">@subtotal.ToString("#,##0 VNĐ")</th>
+                                        <th colspan="3"></th>
+                                        <th class="text-right">Tổng cộng:</th>
+                                        <th class="text-center" id="grandtotal">@subtotal.ToString("#,##0 VNĐ")</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5"></th>
+                                        <th class="text-center">
+                                            <a class="btn btn-danger btn-sm d-inline-flex align-items-center justify-content-center"
+                                               asp-controller="Cart" asp-action="Clear">
+                                                <i class="fa fa-trash"></i> Clear
+                                            </a>
+                                        </th>
                                     </tr>
                                 </tfoot>
+
                             </table>
                         </div>
 

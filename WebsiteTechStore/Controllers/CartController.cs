@@ -27,13 +27,13 @@ namespace WebsiteTechStore.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> Add (int Id)
+        public async Task<IActionResult> Add(int Id)
         {
             ProductModel product = await _dataContext.Products.FindAsync(Id);
             List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
             CartItemModel cartItems = cart.Where(c => c.ProductId == Id).FirstOrDefault();
 
-            if(cartItems == null)
+            if (cartItems == null)
             {
                 cart.Add(new CartItemModel(product));
             }
@@ -43,7 +43,82 @@ namespace WebsiteTechStore.Controllers
             }
 
             HttpContext.Session.SetJson("Cart", cart);
+
+            TempData["success"] = "Product added to cart successfully!";
             return Redirect(Request.Headers["Referer"].ToString());
+        }
+        public async Task<IActionResult> Decrease(int Id)
+        {
+            List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
+
+            CartItemModel carItem = cart.Where(c => c.ProductId == Id).FirstOrDefault();
+            if (carItem.Quantity > 1)
+            {
+                carItem.Quantity -= 1;
+            }
+            else
+            {
+                cart.RemoveAll(c => c.ProductId == Id);
+            }
+            if (cart.Count == 0)
+            {
+                HttpContext.Session.Remove("Cart");
+            }
+            else
+            {
+                HttpContext.Session.SetJson("Cart", cart);
+            }
+            TempData["success"] = "Product decrease successfully!";
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Increase(int Id)
+        {
+            List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
+
+            CartItemModel carItem = cart.Where(c => c.ProductId == Id).FirstOrDefault();
+            if (carItem.Quantity >= 1)
+            {
+                carItem.Quantity += 1;
+            }
+            else
+            {
+                cart.RemoveAll(c => c.ProductId == Id);
+            }
+            if (cart.Count == 0)
+            {
+                HttpContext.Session.Remove("Cart");
+            }
+            else
+            {
+                HttpContext.Session.SetJson("Cart", cart);
+            }
+
+            TempData["success"] = "Product increase successfully!";
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Remove(int Id){
+            List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
+
+            cart.RemoveAll(p => p.ProductId == Id);
+            if (cart.Count == 0)
+            {
+                HttpContext.Session.Remove("Cart");
+            }
+            else
+            {
+                HttpContext.Session.SetJson("Cart", cart);
+            }
+            TempData["error"] = "Product removed to cart successfully!";
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Clear(int Id)
+        {
+            HttpContext.Session.Remove("Cart");
+            TempData["error"] = "All product cleared to cart successfully!";
+            return RedirectToAction("Index");
         }
     }
 }
