@@ -8,7 +8,7 @@
 
 	<title>@ViewData["title"] Admin </title>
 
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
 	<link type="text/css" rel="stylesheet" href="~/css/slick.css" />
 	<link type="text/css" rel="stylesheet" href="~/css/slick-theme.css" />
@@ -24,47 +24,38 @@
 	<![endif]-->
 
 </head>
-<header>
-	<!-- TOP HEADER -->
-				<!-- SEARCH BAR -->
+<header class="admin-topbar">
 	<div class="container">
-    <div class="row" style="padding:10px 0;">
+		<div class="row items-center" style="padding:10px 0;">
 			<div class="col-md-6">
 				<h3 class="admin-title">ADMIN</h3>
 			</div>
 			<div class="col-md-6 text-right">
-            <form method="get" asp-controller="Product" asp-action="Index" class="admin-search form-inline">
-                <input name="q" value="@(Context.Request.Query["q"])" type="text" class="admin-input" placeholder="Search here..." />
-                <button type="submit" class="btn btn-danger admin-btn">Search</button>
-            </form>
-        </div>
-    </div>
-</div>
-				<!-- /SEARCH BAR -->
-	<!-- NAVIGATION -->
-	<nav id="navigation">
-		<!-- container -->
+				<form method="get" asp-controller="Product" asp-action="Index" class="admin-search">
+					<input name="q" value="@(Context.Request.Query["q"])" type="text" class="admin-input" placeholder="Search here..." />
+					<button type="submit" class="btn btn-danger admin-btn">Search</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<nav id="navigation" class="admin-nav">
 		<div class="container">
-			<!-- responsive-nav -->
 			<div id="responsive-nav">
-				<!-- NAV -->
 				<ul class="main-nav nav navbar-nav">
 					<li class="active"><a asp-area="Admin" asp-action="Index" asp-controller="Home">Home</a></li>
 					<li><a asp-area="Admin" asp-action="Index" asp-controller="Product">Product</a></li>
 					<li><a asp-area="Admin" asp-action="Index" asp-controller="Catagory">Catagory</a></li>
 					<li><a asp-area="Admin" asp-action="Index" asp-controller="Brand">Brand</a></li>
 				</ul>
-				<!-- /NAV -->
 			</div>
-			<!-- /responsive-nav -->
 		</div>
-		<!-- /container -->
 	</nav>
-	<!-- /NAVIGATION -->
 </header>
+
 <body>
 
-	<section>
+	<section class="admin-content">
 		<div class="container">
 			<div class="row">
 				@Html.Partial("_NotificationPartial")
@@ -94,7 +85,6 @@
 			});
 		}, 3000);
 	</script>
-
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

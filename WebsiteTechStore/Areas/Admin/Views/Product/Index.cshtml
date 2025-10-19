@@ -3,8 +3,14 @@
 	ViewData["title"] = "Product Listed";
 }
 
-<h3>List product</h3>
-<a asp-area="Admin" asp-action="Create" asp-controller="Product">Add product</a>
+<div class="page-header">
+    <h2 class="page-title">List product</h2>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-danger" style="border-radius:10px;font-weight:700;">
+            <i class="fa fa-plus"></i> Add product
+        </a>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
