@@ -2,7 +2,7 @@
 @{
 		ViewData["title"] = "Create Product";
 }
-<h4>Create Product</h4>
+<h4>Thêm sản phẩm</h4>
 <div class=" col-md-9">
 	<form asp-action="Create" method="post" enctype="multipart/form-data">
 		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -41,10 +41,10 @@
 			<span asp-validation-for="ImageUpload" class="text-danger" />
 		</div>
 		<div class="form-group">
-			<button class=" btn btn-primary">Create</button>
+			<button class="btn btn-danger" style="border-radius:10px;font-weight:700;"> <i class="fa fa-plus"></i> Tạo</button>
 		</div>
 	</form>
-	<a asp-action="Index">Back to List Product</a>
+	<a asp-action="Index">Trở về danh sách sản phẩm</a>
 </div>
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
