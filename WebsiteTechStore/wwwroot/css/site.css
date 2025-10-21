@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -20,3 +20,58 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Giãn đều khoảng cách giữa các cột */
+#store .row > [class*="col-"] {
+    margin-bottom: 40px; /* tăng từ 15 → 35px, có thể chỉnh nếu muốn */
+}
+
+/* Nút thêm vào giỏ: nhỏ gọn & cân đối */
+.product .add-to-cart {
+    padding-top: 8px; /* tạo khoảng thở nhỏ phía trên */
+    background: transparent;
+}
+
+    /* Thu nhỏ nút + căn giữa */
+    .product .add-to-cart .add-to-cart-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px; /* khoảng cách icon - chữ */
+        height: 38px; /* ↓ từ 44px */
+        padding: 0 16px; /* ít đệm hơn */
+        font-size: 12.5px; /* chữ nhỏ vừa mắt */
+        font-weight: 700;
+        border-radius: 9999px;
+        width: auto; /* KHÔNG full chiều ngang nữa */
+        max-width: 220px; /* giới hạn, nhìn gọn */
+        min-width: 160px; /* để nút không quá ngắn */
+        margin: 6px auto 0; /* căn giữa trong card */
+        border: 2px solid transparent;
+        background: #ef233c;
+        color: #fff;
+        transition: .2s;
+    }
+
+        /* Icon nhỏ lại cho cân */
+        .product .add-to-cart .add-to-cart-btn i {
+            font-size: 14px;
+            margin: 0; /* đã dùng gap ở trên */
+        }
+
+        /* Hover giữ hiệu ứng theo theme */
+        .product .add-to-cart .add-to-cart-btn:hover {
+            background: #fff;
+            color: #D10024;
+            border-color: #D10024;
+        }
+
+/* Mobile: cho full width nếu cần dễ bấm */
+@media (max-width: 576px) {
+    .product .add-to-cart .add-to-cart-btn {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+
