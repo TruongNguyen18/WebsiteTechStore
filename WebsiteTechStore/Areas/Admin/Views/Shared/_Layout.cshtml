@@ -32,8 +32,8 @@
 			</div>
 			<div class="col-md-6 text-right">
 				<form method="get" asp-controller="Product" asp-action="Index" class="admin-search">
-					<input name="q" value="@(Context.Request.Query["q"])" type="text" class="admin-input" placeholder="Search here..." />
-					<button type="submit" class="btn btn-danger admin-btn">Search</button>
+					<input name="q" value="@(Context.Request.Query["q"])" type="text" class="admin-input" placeholder="Tìm..." />
+					<button type="submit" class="btn btn-danger admin-btn">Tìm kiếm</button>
 				</form>
 			</div>
 		</div>
@@ -43,8 +43,8 @@
 		<div class="container">
 			<div id="responsive-nav">
 				<ul class="main-nav nav navbar-nav">
-					<li class="active"><a asp-area="Admin" asp-action="Index" asp-controller="Home">Trang chủ</a></li>
-					<li><a asp-area="Admin" asp-action="Index" asp-controller="Product">Sản phẩm</a></li>
+					<li><a asp-area="" asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+					<li class="active"><a asp-area="Admin" asp-action="Index" asp-controller="Product">Sản phẩm</a></li>
 					<li><a asp-area="Admin" asp-action="Index" asp-controller="Category">Loại sản phẩm</a></li>
 					<li><a asp-area="Admin" asp-action="Index" asp-controller="Brand">Thương hiệu</a></li>
 				</ul>

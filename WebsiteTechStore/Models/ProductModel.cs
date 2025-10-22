@@ -39,6 +39,6 @@ namespace WebsiteTechStore.Models
         public string Image { get; set; }
         [NotMapped]
         [FileExtension]
-        public IFormFile ImageUpload { get; set; }
+        public IFormFile? ImageUpload { get; set; }
     }
 }

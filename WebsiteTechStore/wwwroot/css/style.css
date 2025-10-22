@@ -2584,6 +2584,70 @@ button, .btn, .btn-chip, .admin-btn {
 .text-semibold {
     font-weight: 600 !important;
 }
+/* ---- CARD SẢN PHẨM ĐỒNG CHIỀU CAO ---- */
+.product {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 12px;
+  background: #fff;
+  transition: box-shadow .2s ease;
+}
+.product:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+
+/* ẢNH: giữ cùng tỉ lệ và không vỡ layout */
+.product-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;         /* Edge/Chrome OK; giữ khung ảnh cố định */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.product-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Phần nội dung đàn hồi, để nút luôn ở đáy */
+.product-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 auto;
+}
+.product-body .product-name {
+  line-height: 1.3;
+  min-height: 2.6em;           /* chặn tên dài làm nhảy khung (≈2 dòng) */
+  overflow: hidden;
+}
+.product-body .product-price { font-weight: 700; }
+
+/* Khu vực nút ghim xuống đáy */
+.add-to-cart { margin-top: auto; }
+
+/* Nút đẹp hơn và full chiều ngang */
+.add-to-cart-btn{
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #e54256;
+  color: #fff;
+  transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+}
+.add-to-cart-btn:hover{
+  background: #c91f3a;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.add-to-cart-btn i{ margin-right: 6px; }
 
 
 </style >
