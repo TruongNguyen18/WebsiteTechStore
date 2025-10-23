@@ -9,11 +9,11 @@ namespace WebsiteTechStore.Repository.Validation
             if(value is IFormFile file)
             {
                 var extension = Path.GetExtension(file.FileName);
-                string[] extensions = { ".jpg", ".jpeg", ".png"};
+                string[] extensions = { "jpg", "jpeg", "png"};
                 bool result = extensions.Any(x => extension.EndsWith(x));
                 if (!result)
                 {
-                    return new ValidationResult("Invalid file extension. Allowed extensions are: " + string.Join(", ", extensions));
+                    return new ValidationResult("Invalid file extension. Allowed extensions are jpg or png:");
                 }
                 
             }

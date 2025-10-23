@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OrderDetail>
+@{
+    ViewData["title"] = "Order Details";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="page-header">
+        <h2 class="page-title">ĐƠN HÀNG</h2>
+    </div>
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>OrderCode</th>
+                <th>UserName</th>
+                <th>ID sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>#</td>
+                    <td>@item.OrderCode</td>
+                    <td>@item.UserName</td>
+                    <td>@item.ProductId</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                    @* <td>@(item.Status == 1 ? "Đơn hàng mới" : "Đơn hàng đã được xử lý")</td> *@
+                 
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+
+</html>

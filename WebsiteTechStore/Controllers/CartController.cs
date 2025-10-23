@@ -44,7 +44,7 @@ namespace WebsiteTechStore.Controllers
 
             HttpContext.Session.SetJson("Cart", cart);
 
-            TempData["success"] = "Product added to cart successfully!";
+            TempData["success"] = "Sản phẩm đã được thêm vào giỏ hàng!";
             return Redirect(Request.Headers["Referer"].ToString());
         }
         public async Task<IActionResult> Decrease(int Id)
@@ -68,7 +68,7 @@ namespace WebsiteTechStore.Controllers
             {
                 HttpContext.Session.SetJson("Cart", cart);
             }
-            TempData["success"] = "Product decrease successfully!";
+            TempData["success"] = "Giảm số lượng sản phẩm thành công!";
             return RedirectToAction("Index");
         }
 
@@ -94,7 +94,7 @@ namespace WebsiteTechStore.Controllers
                 HttpContext.Session.SetJson("Cart", cart);
             }
 
-            TempData["success"] = "Product increase successfully!";
+            TempData["success"] = "Tăng số lượng sản phẩm thành công!";
             return RedirectToAction("Index");
         }
 
@@ -110,14 +110,14 @@ namespace WebsiteTechStore.Controllers
             {
                 HttpContext.Session.SetJson("Cart", cart);
             }
-            TempData["error"] = "Product removed to cart successfully!";
+            TempData["error"] = "Sản phẩm đã bị xóa khỏi giỏ hàng!";
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Clear(int Id)
         {
             HttpContext.Session.Remove("Cart");
-            TempData["error"] = "All product cleared to cart successfully!";
+            TempData["error"] = "Tất cả sản phẩm đã được xóa khỏi giỏ hàng!";
             return RedirectToAction("Index");
         }
     }

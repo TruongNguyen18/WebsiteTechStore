@@ -35,7 +35,13 @@
 					<li><a href="#"><i class="fa fa-phone"></i> 0822186204</a></li>
 				</ul>
 				<ul class="header-links pull-right">
-					<li><a asp-controller="Account"><i class="fa fa-user-o"></i> Tài khoản</a></li>
+					@if(User.Identity?.IsAuthenticated ?? false)
+					{
+						<li><a asp-action="Logout" asp-controller="Account"><i class="fa fa-user-o"></i>Hi, @User.Identity.Name, Logout</a></li>
+					}else
+					{
+						<li><a asp-action="Login" asp-controller="Account"><i class="fa fa-user-o"></i> Tài khoản</a></li>
+					}
 				</ul>
 			</div>
 		</div>
@@ -57,10 +63,12 @@
 					<!-- /LOGO -->
 					<!-- SEARCH BAR -->
 					<div class="col-md-6 d-flex justify-content-center">
+						<form asp-controller="Product" asp-action="Search" method="get">
 						<div class="header-search">
-							<input class="input" type="text" placeholder="Tìm...">
+							<input class="input" type="search" name="search" placeholder="Tìm...">
 							<button class="search-btn">Tìm kiếm</button>
 						</div>
+						</form>
 					</div>
 
 					<!-- /SEARCH BAR -->

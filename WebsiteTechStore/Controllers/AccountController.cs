@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebsiteTechStore.Models;
+using WebsiteTechStore.Models.ViewModels;
 
 namespace WebsiteTechStore.Controllers
 {
@@ -15,13 +16,25 @@ namespace WebsiteTechStore.Controllers
             _signInManage = signInManage;
         }
 
-        public IActionResult Index()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            return View(new LoginViewModel { ReturnUrl = returnUrl});
         }
-        public async Task<IActionResult> Login()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManage.PasswordSignInAsync(loginVM.UserName,loginVM.Password,false,false);
+                if (result.Succeeded)
+                {
+                    TempData["success"] = "Đăng nhập thành công!!";
+                    return Redirect(loginVM.ReturnUrl ?? "/");
+                }
+                ModelState.AddModelError("", "Invalid Username and Password");
+            }
+            return View(loginVM);
         }
         public IActionResult Create()
         {
@@ -34,11 +47,11 @@ namespace WebsiteTechStore.Controllers
             if (ModelState.IsValid)
             {
                 AppUserModel newUser = new AppUserModel { UserName = user.UserName, Email = user.Email };
-                IdentityResult result = await _userManage.CreateAsync(newUser);
+                IdentityResult result = await _userManage.CreateAsync(newUser,user.Password);
                 if (result.Succeeded)
                 {
                     TempData["success"] = "Tạo thành công user!!";
-                    return Redirect("/admin");
+                    return Redirect("/account/login");
                 }
                 foreach(IdentityError error in result.Errors)
                 {
@@ -46,6 +59,11 @@ namespace WebsiteTechStore.Controllers
                 }
             }
             return View(user);
+        }
+        public async Task<IActionResult> Logout(string returnUrl = "/")
+        {
+            await _signInManage.SignOutAsync();
+            return Redirect(returnUrl);
         }
     }
 }

@@ -102,10 +102,13 @@
                                 <i class="fa fa-arrow-left"></i> Tiếp tục mua sắm
                             </a>
                         </div>
+                       
                         <div class="pull-right">
+                            @if (User.Identity?.IsAuthenticated ?? false){
                             <a asp-controller="Checkout" asp-action="Checkout" class="primary-btn cta-btn">
                                 Thanh toán <i class="fa fa-arrow-right"></i>
-                            </a>
+                            </a>}
+                            
                         </div>
                     }
                 </div>

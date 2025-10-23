@@ -21,57 +21,244 @@ body {
   margin-bottom: 60px;
 }
 
-/* Giãn đều khoảng cách giữa các cột */
-#store .row > [class*="col-"] {
-    margin-bottom: 40px; /* tăng từ 15 → 35px, có thể chỉnh nếu muốn */
+/* ===== 3 CỘT, KHOẢNG CÁCH ĐỀU, ÁP DỤNG CHO DESKTOP ===== */
+#product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 cột */
+    gap: 24px !important;
+    margin: 0 !important;
 }
 
-/* Nút thêm vào giỏ: nhỏ gọn & cân đối */
+    /* Không dùng margin-bottom khi đã có gap của grid */
+    #product-grid > [class*="col-"] {
+        width: auto !important;
+        max-width: none !important;
+        flex: none !important;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+/* ===== CARD CAO ĐỀU, NÚT Ở ĐÁY ===== */
+.product.card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    height: 100% !important;
+    min-height: 480px; /* chỉnh theo ý (420–520px) */
+    padding: 16px;
+}
+
+.product-body {
+    flex-grow: 1 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Ảnh cố định tỷ lệ để card không nhảy */
+.product-img {
+    width: 100%;
+    aspect-ratio: 4/3; /* đổi 1/1 nếu muốn vuông */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+    .product-img img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+/* Tắt overlay cũ để nút không bị trôi khi hover (Electro template) */
 .product .add-to-cart {
-    padding-top: 8px; /* tạo khoảng thở nhỏ phía trên */
-    background: transparent;
+    position: static !important;
+    transform: none !important;
+    background: transparent !important;
+    padding: 0 !important;
 }
 
-    /* Thu nhỏ nút + căn giữa */
-    .product .add-to-cart .add-to-cart-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px; /* khoảng cách icon - chữ */
-        height: 38px; /* ↓ từ 44px */
-        padding: 0 16px; /* ít đệm hơn */
-        font-size: 12.5px; /* chữ nhỏ vừa mắt */
-        font-weight: 700;
-        border-radius: 9999px;
-        width: auto; /* KHÔNG full chiều ngang nữa */
-        max-width: 220px; /* giới hạn, nhìn gọn */
-        min-width: 160px; /* để nút không quá ngắn */
-        margin: 6px auto 0; /* căn giữa trong card */
-        border: 2px solid transparent;
-        background: #ef233c;
-        color: #fff;
-        transition: .2s;
+.product:hover .add-to-cart {
+    transform: none !important;
+}
+
+/* Nút luôn nằm ở đáy card */
+.add-to-cart-btn {
+    margin-top: auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991.98px) {
+    #product-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    /* tablet: 2 cột */
+}
+
+@media (max-width: 575.98px) {
+    #product-grid {
+        grid-template-columns: 1fr !important;
+    }
+    /* mobile: 1 cột */
+}
+
+/* (Giữ nguyên phần style nút bạn đã có) */
+.product .add-to-cart .add-to-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 16px;
+    font-size: 12.5px;
+    font-weight: 700;
+    border-radius: 9999px;
+    width: auto;
+    max-width: 220px;
+    min-width: 160px;
+    margin: 6px auto 0;
+    border: 2px solid transparent;
+    background: #ef233c;
+    color: #fff;
+    transition: .2s;
+}
+
+    .product .add-to-cart .add-to-cart-btn:hover {
+        background: #fff;
+        color: #D10024;
+        border-color: #D10024;
     }
 
-        /* Icon nhỏ lại cho cân */
-        .product .add-to-cart .add-to-cart-btn i {
-            font-size: 14px;
-            margin: 0; /* đã dùng gap ở trên */
-        }
+/* ==== GRID 3 CỘT + CĂN CAO ĐỀU ==== */
+#store #product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+    gap: 24px !important;
+    margin: 0 !important;
+    align-items: stretch !important; /* các item bằng chiều cao hàng */
+}
 
-        /* Hover giữ hiệu ứng theo theme */
-        .product .add-to-cart .add-to-cart-btn:hover {
-            background: #fff;
-            color: #D10024;
-            border-color: #D10024;
-        }
+    /* Item trong grid (các .col-*) không để margin/padding bên ngoài và KÉO CAO 100% */
+    #store #product-grid > [class*="col-"] {
+        flex: none !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        height: 100% !important; /* quan trọng */
+    }
 
-/* Mobile: cho full width nếu cần dễ bấm */
-@media (max-width: 576px) {
-    .product .add-to-cart .add-to-cart-btn {
-        width: 100%;
-        max-width: none;
+/* ==== CARD CAO 100% + NÚT Ở ĐÁY ==== */
+.product.card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important; /* quan trọng */
+    min-height: 480px; /* bạn có thể chỉnh 420–520px nếu muốn */
+    padding: 16px;
+}
+
+.product-body {
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* khoảng cách đều trong thân */
+}
+
+/* Ảnh cố định khung để card không nhảy */
+.product-img {
+    width: 100% !important;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+    .product-img img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+/* Tên sản phẩm 2 dòng để không đẩy card cao bất thường */
+.product-body .product-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.8em; /* ≈2 dòng */
+    line-height: 1.4;
+}
+
+/* Category & Price giữ chỗ gọn gàng */
+.product-body .product-category {
+    min-height: 1.2em;
+}
+
+.product-body .product-price {
+    min-height: 1.2em;
+}
+
+/* Tắt overlay add-to-cart của theme Electro để nút luôn nằm trong flow */
+.product .add-to-cart {
+    position: static !important;
+    transform: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+.product:hover .add-to-cart {
+    transform: none !important;
+}
+
+/* Nút luôn ở đáy thân */
+.add-to-cart-btn {
+    margin-top: auto !important;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 991.98px) {
+    #store #product-grid {
+        grid-template-columns: repeat(2, minmax(0,1fr)) !important;
     }
 }
+
+@media (max-width: 575.98px) {
+    #store #product-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Giữ style nút như bạn đang dùng */
+.product .add-to-cart .add-to-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 16px;
+    font-size: 12.5px;
+    font-weight: 700;
+    border-radius: 9999px;
+    width: auto;
+    max-width: 220px;
+    min-width: 160px;
+    margin: 6px auto 0;
+    border: 2px solid transparent;
+    background: #ef233c;
+    color: #fff;
+    transition: .2s;
+}
+
+    .product .add-to-cart .add-to-cart-btn:hover {
+        background: #fff;
+        color: #D10024;
+        border-color: #D10024;
+    }
+
+
+
 
 

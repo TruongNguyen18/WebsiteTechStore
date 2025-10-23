@@ -26,7 +26,7 @@ namespace WebsiteTechStore.Models
         public string Slug { get; set; }
         [Required(ErrorMessage = "Yêu cầu nhập giá sản phẩm")]
         [Range(0.01,double.MaxValue)]
-        [Column(TypeName = "decimal(8,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public int Status { get; set; }
