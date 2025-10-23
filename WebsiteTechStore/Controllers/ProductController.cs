@@ -16,6 +16,16 @@ namespace WebsiteTechStore.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Search(string search)
+        {
+            var product = await _dataContext.Products
+                .Where(p => p.Name.Contains(search) || p.Description.Contains(search))
+                .ToListAsync();
+            ViewBag.Keyword = search;
+
+            return View(product);
+        }
+
         public async Task<IActionResult> Details(int Id)
         {
             var product = await _dataContext.Products

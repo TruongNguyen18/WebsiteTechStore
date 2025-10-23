@@ -1,4 +1,4 @@
-﻿@model LoginViewModel;
+﻿@model LoginViewModel
 @{
     ViewData["Title"] = "Đăng nhập / Đăng ký";
 }
@@ -6,11 +6,11 @@
 <style>
     /* Căn giữa toàn trang (trừ header/footer Electro) */
     .auth-wrap {
-        min-height: calc(80vh - 200px); /* có thể chỉnh 200px tùy chiều cao header/footer */
+        min-height: calc(80vh - 200px); 
         display: flex;
-        align-items: center; /* căn giữa theo chiều dọc */
-        justify-content: center; /* căn giữa theo chiều ngang */
-        padding: 32px 16px; /* tránh dính mép */
+        align-items: center; 
+        justify-content: center; 
+        padding: 32px 16px; 
     }
 
     /* Khung form */
@@ -78,3 +78,8 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

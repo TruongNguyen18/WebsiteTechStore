@@ -59,7 +59,7 @@ namespace WebsiteTechStore.Areas.Admin.Controllers
                     }
                 _dataContext.Add(product);
                 await _dataContext.SaveChangesAsync();
-            TempData["success"] = "Đã thêm thành công sản phẩm";
+                TempData["success"] = "Đã thêm thành công sản phẩm";
                 return RedirectToAction("Index");
             }
             else

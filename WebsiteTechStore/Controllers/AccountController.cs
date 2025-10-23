@@ -15,35 +15,26 @@ namespace WebsiteTechStore.Controllers
             _userManage = userManage;
             _signInManage = signInManage;
         }
-        public IActionResult Index()
+
+        public IActionResult Login(string returnUrl)
         {
-            return View();
-        }
-        public async Task<IActionResult> Login(String returnUrl)
-        {
-            return View(new LoginViewModel { ReturnUrl = returnUrl}  );
+            return View(new LoginViewModel { ReturnUrl = returnUrl});
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel login)
+        public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManage.PasswordSignInAsync(login.UserName, login.Password, false, false);
+                Microsoft.AspNetCore.Identity.SignInResult result = await _signInManage.PasswordSignInAsync(loginVM.UserName,loginVM.Password,false,false);
                 if (result.Succeeded)
                 {
-                    if (!string.IsNullOrEmpty(login.ReturnUrl) && Url.IsLocalUrl(login.ReturnUrl))
-                    {
-                        return Redirect(login.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    TempData["success"] = "Đăng nhập thành công!!";
+                    return Redirect(loginVM.ReturnUrl ?? "/");
                 }
-                ModelState.AddModelError("", "Đăng nhập không hợp lệ!!");
+                ModelState.AddModelError("", "Invalid Username and Password");
             }
-            return View(login);
+            return View(loginVM);
         }
         public IActionResult Create()
         {
@@ -56,11 +47,11 @@ namespace WebsiteTechStore.Controllers
             if (ModelState.IsValid)
             {
                 AppUserModel newUser = new AppUserModel { UserName = user.UserName, Email = user.Email };
-                IdentityResult result = await _userManage.CreateAsync(newUser, user.Password);
+                IdentityResult result = await _userManage.CreateAsync(newUser,user.Password);
                 if (result.Succeeded)
                 {
                     TempData["success"] = "Tạo thành công user!!";
-                    return Redirect("/account");
+                    return Redirect("/account/login");
                 }
                 foreach(IdentityError error in result.Errors)
                 {
@@ -69,11 +60,10 @@ namespace WebsiteTechStore.Controllers
             }
             return View(user);
         }
-
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl = "/")
         {
             await _signInManage.SignOutAsync();
-            return RedirectToAction("Index","Home");
+            return Redirect(returnUrl);
         }
     }
 }
