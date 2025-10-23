@@ -47,7 +47,7 @@
             <!-- STORE -->
             <div id="store" class="col-md-9">
                 <!-- store top filter -->
-                <div class="store-filter clearfix">
+                @* <div class="store-filter clearfix">
                     <div class="store-sort">
 
                         <label>
@@ -62,15 +62,15 @@
                         <li class="active"><i class="fa fa-th"></i></li>
                         <li><a href="#"><i class="fa fa-th-list"></i></a></li>
                     </ul>
-                </div>
+                </div> *@
                 <!-- /store top filter -->
                 <!-- store products -->
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="product-grid">
+                <div class="row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="product-grid">
                     @foreach (var item in Model)
                     {
                         <div class="col d-flex">
                             <!-- d-flex để ép card cao 100% -->
-                            <div class="product card flex-fill d-flex flex-column text-center">
+                            <div class="product-card card flex-fill d-flex flex-column text-center">
                                 <a asp-action="Details" asp-controller="Product" asp-route-id="@item.Id">
                                     <div class="product-img p-3">
                                         <img src="~/media/products/@item.Image" alt="@item.Name" />
