@@ -12,16 +12,36 @@ namespace WebsiteTechStore.Controllers
         {
             _dataContext = context;
         }
-        public async Task<IActionResult> Index(string Slug = "")
+        public async Task<IActionResult> Index(string Slug = "", int pg = 1)
         {
-            BrandModel brand = _dataContext.Brands.Where(c => c.Slug == Slug).FirstOrDefault();
+            const int pageSize = 9;
+            var brand = _dataContext.Brands.FirstOrDefault(b => b.Slug == Slug);
             if (brand == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home"); // giữ cách cũ gần nhất, chỉ điều hướng về Home
             }
-            var productsByBrand = _dataContext.Products.Where(p => p.BrandId == brand.Id);
 
-            return View(await productsByBrand.OrderByDescending(p => p.Id).ToListAsync());
+            var query = _dataContext.Products
+                                    .Where(p => p.BrandId == brand.Id)
+                                    .OrderByDescending(p => p.Id);
+
+            var totalItems = await query.CountAsync();
+            if (pg < 1) pg = 1;
+
+            // Paginate của bạn
+            var pager = new Paginate(totalItems, pg, pageSize);
+
+            // lấy dữ liệu trang hiện tại
+            var items = await query.Skip((pg - 1) * pager.PageSize)
+                                   .Take(pager.PageSize)
+                                   .ToListAsync();
+
+            // gửi info ra View (để không phải đổi nhiều ở View)
+            ViewBag.Pager = pager;
+            ViewBag.Slug = Slug;
+            ViewBag.CategoryName = brand.Name;
+
+            return View(items);
         }
     }
 }

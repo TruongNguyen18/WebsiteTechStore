@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using WebsiteTechStore.Repository;
 namespace WebsiteTechStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly DataContext _dataContext;
@@ -119,6 +121,7 @@ namespace WebsiteTechStore.Areas.Admin.Controllers
                 existed_product.Price = product.Price;
                 existed_product.CategoryId = product.CategoryId;
                 existed_product.BrandId = product.BrandId;
+                existed_product.Status = product.Status;
                 _dataContext.Update(existed_product);
                 await _dataContext.SaveChangesAsync();
                 TempData["success"] = "Cập nhật sản phẩm thành công";

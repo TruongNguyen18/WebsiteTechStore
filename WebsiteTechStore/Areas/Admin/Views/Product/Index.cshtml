@@ -29,6 +29,7 @@
             <th scope="col">Từ khóa</th>
             <th scope="col">Loại sản phẩm</th>
             <th scope="col">Thương hiệu</th>
+            <th scope="col">Trạng thái</th>
         </tr>
     </thead>
     <tbody>
@@ -45,10 +46,12 @@
                 <td>@item.Slug</td>
                 <td>@item.Category.Name</td>
                 <td>@item.Brand.Name</td>
+                <td>@(item.Status == 1 ? "Hiển thị" : "Ẩn")</td>
                 <td>
                     <a class="btn btn-warning btn-sm" asp-area="Admin" asp-action="Edit" asp-controller="Product" asp-route-Id="@item.Id">Sửa</a>
                     <a class="btn btn-danger btn-sm" asp-area="Admin" asp-action="Delete" asp-controller="Product" asp-route-Id="@item.Id">Xóa</a>
                 </td>
+                
             </tr>
         }
        

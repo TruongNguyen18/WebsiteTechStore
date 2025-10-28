@@ -45,7 +45,7 @@ namespace WebsiteTechStore.Controllers
                 }
                 HttpContext.Session.Remove("Cart");
                 TempData["success"] = "Đặt hàng thành công!!";
-                return RedirectToAction("Index", "Cart");
+                return RedirectToAction("History", "Account");
             }
                 return View();
         }

@@ -9,7 +9,8 @@ using WebsiteTechStore.Repository;
 namespace WebsiteTechStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
+
     public class OrderController : Controller
     {
         private readonly DataContext _dataContext;
@@ -34,8 +35,34 @@ namespace WebsiteTechStore.Areas.Admin.Controllers
         }
         public async Task<IActionResult> ViewOrder(string ordercode)
         {
-            var DetailsOrder = await _dataContext.OrderDetails.Include(od => od.Product).Where(od => od.OrderCode==ordercode).ToListAsync(); 
+            var DetailsOrder = await _dataContext.OrderDetails.Include(od => od.Product).Where(od => od.OrderCode==ordercode).ToListAsync();
+            var StatusOrder = _dataContext.Orders.Where(o => o.OrderCode == ordercode).First();
+            ViewBag.Status = StatusOrder.Status;
             return View(DetailsOrder);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(string orderCode, int status) 
+        {
+            if (string.IsNullOrWhiteSpace(orderCode))
+            {
+                TempData["error"] = "Mã đơn hàng không hợp lệ!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var order = await _dataContext.Orders.FirstOrDefaultAsync(o => o.OrderCode == orderCode);
+            if (order == null)
+            {
+                TempData["error"] = "Không tìm thấy đơn hàng!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            order.Status = status;
+            _dataContext.Update(order);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Cập nhật trạng thái thành công.";
+            return RedirectToAction(nameof(Index)); 
         }
 
         [HttpGet]

@@ -11,7 +11,7 @@ namespace WebsiteTechStore.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Role")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly DataContext _dataContext;
@@ -21,22 +21,21 @@ namespace WebsiteTechStore.Areas.Admin.Controllers
             _dataContext = context;
             _roleManager = roleManager;
         }
+
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
             return View(await _dataContext.Roles.OrderByDescending(p=>p.Id).ToListAsync());
         }
 
-       
-
-        [HttpGet]
+        [HttpGet("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
 
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IdentityRole model)
         {
@@ -47,32 +46,21 @@ namespace WebsiteTechStore.Areas.Admin.Controllers
             return Redirect("/admin/role/index");
         }
 
-        [HttpGet]
+        [HttpGet("Delete/{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                return NotFound();
-            }
+            if (string.IsNullOrEmpty(id)) return NotFound();
 
-            var role = await _roleManager.FindByNameAsync(id);
-            if(role == null)
-            {
-                return NotFound();
-            }
-            try
-            {
-                await _roleManager.DeleteAsync(role);
-                TempData["success"] = "Chức vụ đã xóa thành công";
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", "Có lỗi khi xóa chức vụ");
-            }
-            return Redirect("/admin/role/index");
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null) return NotFound();
+
+            await _roleManager.DeleteAsync(role);
+            TempData["success"] = "Chức vụ đã xóa thành công";
+            return RedirectToAction(nameof(Index), new { area = "Admin" });
         }
 
-        [HttpGet]
+
+        [HttpGet("Edit/{id}")]
         public async Task<IActionResult> Edit(string id)
         {
             if(string.IsNullOrEmpty(id))
@@ -84,7 +72,7 @@ namespace WebsiteTechStore.Areas.Admin.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, IdentityRole model)
         {

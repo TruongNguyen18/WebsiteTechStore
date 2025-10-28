@@ -17,9 +17,28 @@ namespace WebsiteTechStore.Controllers
             _dataContext = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pg =1 , int pageSize=9)
         {
-            var products = _dataContext.Products.Include("Category").Include("Brand").ToList();
+            if (pg < 1) pg = 1;
+
+            // Query s?n ph?m
+            var query = _dataContext.Products
+                                    .Include(p => p.Category)
+                                    .Include(p => p.Brand)
+                                    .AsNoTracking()
+                                    .OrderByDescending(p => p.Id);
+
+            // Tính t?ng & t?o pager
+            int totalItems = await query.CountAsync();
+            var pager = new Paginate(totalItems, pg, pageSize);
+            ViewBag.Pager = pager;
+
+            // L?y d? li?u trang hi?n t?i
+            int recSkip = (pg - 1) * pager.PageSize;
+            var products = await query.Skip(recSkip)
+                                      .Take(pager.PageSize)
+                                      .ToListAsync();
+
             return View(products);
         }
 

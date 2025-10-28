@@ -1,12 +1,13 @@
 ﻿@model IEnumerable<ProductModel>
+@{
+    var pager = ViewBag.Pager as Paginate ?? new Paginate();
+    var slug = ViewBag.Slug as string ?? "";          // <-- giữ lại slug hiện tại
+}
+
 <div class="section">
     <div class="container">
         <div class="row">
-            <!-- SideBarPartial -->
-            @* <div id="aside" class="col-md-4">
-                @Html.Partial("_SidebarPartial")
 
-            </div> *@
             <div id="aside" class="col-md-3">
                 <!-- aside Widget -->
                 <div class="aside">
@@ -27,71 +28,71 @@
             </div>
             <!-- /ASIDE -->
             <!-- STORE -->
-            <div id="store" class="col-md-8">
-                <!-- store top filter -->
-                <div class="store-filter clearfix">
-                    <div class="store-sort">
-                        <label>
-                            Sort By:
-                            <select class="input-select">
-                                <option value="0">Popular</option>
-                                <option value="1">Position</option>
-                            </select>
-                        </label>
-
-                        <label>
-                            Show:
-                            <select class="input-select">
-                                <option value="0">20</option>
-                                <option value="1">50</option>
-                            </select>
-                        </label>
-                    </div>
-                    <ul class="store-grid">
-                        <li class="active"><i class="fa fa-th"></i></li>
-                        <li><a href="#"><i class="fa fa-th-list"></i></a></li>
-                    </ul>
-                </div>
-                <!-- /store top filter -->
-                <!-- store products -->
+            <div id="store" class="col-md-9">
                 <div class="row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="product-grid">
                     @foreach (var item in Model)
                     {
                         <div class="col d-flex">
                             <!-- d-flex để ép card cao 100% -->
-                            <div class="product-card card flex-fill d-flex flex-column text-center">
+                            <div class="product card flex-fill d-flex flex-column text-center">
                                 <a asp-action="Details" asp-controller="Product" asp-route-id="@item.Id">
                                     <div class="product-img p-3">
                                         <img src="~/media/products/@item.Image" alt="@item.Name" />
                                     </div>
-                                    <div class="product-body flex-fill d-flex flex-column">
-                                        <p class="product-category">@item.Slug</p>
-                                        <h3 class="product-name"><a href="#">@item.Name</a></h3>
-                                        <h4 class="product-price">@item.Price.ToString("#,##0VNĐ")</h4>
 
-                                        <button class="add-to-cart-btn mt-auto"
-                                                onclick="window.location.href='@Url.Action("Add", "Cart", new { id = item.Id })'">
-                                            <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
-                                        </button>
+                                    <div class="product-body flex-fill d-flex flex-column">
+                                        <p class="product-category">@item.Category.Name</p>
+                                        <h3 class="product-name">@item.Name</h3>
+                                        <h4 class="product-price">@item.Price.ToString("#,##0VNĐ")</h4>
                                     </div>
                                 </a>
+                                <div class="product-body flex-fill d-flex flex-column">
+                                    <button class="add-to-cart-btn mt-auto"
+                                            onclick="window.location.href='@Url.Action("Add", "Cart", new { id = item.Id })'">
+                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     }
                 </div>
-                <!-- /store products -->
-                <!-- store bottom filter -->
-                <div class="store-filter clearfix">
-                    <span class="store-qty">Showing products</span>
-                    <ul class="store-pagination">
-                        <li class="active">1</li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                    </ul>
-                </div>
-                <!-- /store bottom filter -->
+                @if (pager.TotalPages >= 1)
+                {
+                    <div class="store-filter clearfix mt-3">
+                        <span class="store-qty">
+                            Trang @pager.CurrentPage / @pager.TotalPages — Tổng @pager.TotalItems sản phẩm
+                        </span>
+
+                        <ul class="store-pagination">
+                            @* First + Prev *@
+                            @if (pager.CurrentPage > 1)
+                            {
+                                <li><a asp-action="Index" asp-route-pg="1">1</a></li>
+                                <li><a asp-action="Index" asp-route-pg="@(pager.CurrentPage - 1)"><i class="fa fa-angle-left"></i></a></li>
+                            }
+
+                            @for (var p = pager.StartPage; p <= pager.EndPage; p++)
+                            {
+                                if (p == pager.CurrentPage)
+                                {
+                                    <li class="active">@p</li>
+                                }
+                                else
+                                {
+                                    <li><a asp-action="Index" asp-route-pg="@p">@p</a></li>
+                                }
+                            }
+
+                            @* Next + Last *@
+                            @if (pager.CurrentPage < pager.TotalPages)
+                            {
+                                <li><a asp-action="Index" asp-route-pg="@(pager.CurrentPage + 1)"><i class="fa fa-angle-right"></i></a></li>
+                                <li><a asp-action="Index" asp-route-pg="@pager.TotalPages">@pager.TotalPages</a></li>
+                            }
+                        </ul>
+                    </div>
+                }
             </div>
             <!-- /STORE -->
         </div>

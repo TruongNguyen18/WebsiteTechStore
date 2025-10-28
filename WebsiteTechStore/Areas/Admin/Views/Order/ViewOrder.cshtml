@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<OrderDetail>
 @{
     ViewData["title"] = "Order Details";
+    var orderCode = (string)Context.Request.Query["ordercode"];
 }
 <!DOCTYPE html>
 
@@ -33,11 +34,31 @@
                     <td>@item.UserName</td>
                     <td>@item.ProductId</td>
                     <td>@item.Price</td>
-                    <td>@item.Quantity</td>
-                    @* <td>@(item.Status == 1 ? "Đơn hàng mới" : "Đơn hàng đã được xử lý")</td> *@
+                    <td>@item.Quantity</td>                  
                  
                 </tr>
             }
+                <form asp-area="Admin" asp-controller="Order" asp-action="UpdateStatus" method="post" class="mt-3">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="orderCode" value="@orderCode" />
+
+                    <div class="row g-2 align-items-center" style="max-width:560px">
+                        <div class="col-auto">
+                            <label for="statusSelect" class="col-form-label">Trạng thái:</label>
+                        </div>
+                        <div class="col">
+                            <select id="statusSelect" name="status" class="form-select" required>
+                                <option value="1" selected=" @(ViewBag.Status == 1)">Đơn hàng mới</option>
+                                <option value="2" selected=" @(ViewBag.Status == 2)">Đã xử lý</option>
+                                <option value="3" selected=" @(ViewBag.Status == 3)">Đã hủy</option>
+                            </select>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-secondary ms-2">Quay lại</a>
+                        </div>
+                    </div>
+                </form>
         </tbody>
     </table>
 </body>
