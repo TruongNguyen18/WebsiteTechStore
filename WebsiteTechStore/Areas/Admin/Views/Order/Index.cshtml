@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>OrderCode</th>
+                <th>Địa chỉ</th>
                 <th>UserName</th>
                 <th>Ngày tạo đơn hàng</th>
                 <th>Trạng thái đơn hàng</th>
@@ -28,21 +28,33 @@
             {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.OrderCode</td>
+                    <td>@item.AddressLine</td>
                     <td>@item.UserName</td>
                     <td>@item.CreateDate</td>
                     <td>
                         @if (item.Status == 1)
                         {
-                            <span class="badge bg-primary">Đơn hàng mới</span>
+                            <span class="badge bg-primary">Đang chờ xử lý</span>
                         }
                         else if (item.Status == 2)
                         {
-                            <span class="badge bg-success">Đã xử lý</span>
+                            <span class="badge bg-success">Đã nhận đơn </span>
                         }
                         else if(item.Status ==3)
                         {
-                            <span class="badge bg-danger">Đơn hàng đã hủy</span>
+                            <span class="badge bg-danger">Đang xử lý</span>
+                        }
+                        else if (item.Status == 4)
+                        {
+                            <span class="badge bg-danger">Đã giao tới đơn vị vận chuyển</span>
+                        }
+                        else if (item.Status == 5)
+                        {
+                            <span class="badge bg-danger">Đã giao</span>
+                        }
+                        else if (item.Status == 6)
+                        {
+                            <span class="badge bg-danger">Đã hủy</span>
                         }
                     </td>
                     <td>
